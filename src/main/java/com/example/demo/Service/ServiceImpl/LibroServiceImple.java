@@ -10,5 +10,8 @@ public interface LibroServiceImple {
     public void deleteLibro(Long idLibro);
     public List<LibroEntity> getAllLibro();
     public LibroEntity getByIdLibro(Long idLibro);
+    public String agregarNombreYApellido( String nombreAutor, String correoAutor );
 
-}
+    }
+
+

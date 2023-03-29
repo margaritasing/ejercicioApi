@@ -3,6 +3,8 @@ package com.example.demo.Controller;
 import com.example.demo.Entity.LibroEntity;
 import com.example.demo.Service.ServiceImpl.LibroServiceImple;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +26,11 @@ public class LibroController {
         return libroServiceImple.addLibro(libroEntity);
     }
 
+    @GetMapping("/saludar")
+    public String saludar(@RequestParam(name = "nombre") String nombre,
+                          @RequestParam(name = "apellido") String apellido) {
+        return "Hola " + nombre + " " + apellido + "!";
+    }
     @PutMapping("/actualizar/{idLibro}")
     public LibroEntity updateLibro(@RequestBody LibroEntity libroEntity, @PathVariable Long idLibro){
          return libroServiceImple.updateLibro(libroEntity, idLibro);
@@ -34,7 +41,7 @@ public class LibroController {
         libroServiceImple.deleteLibro(idLibro);
     }
 
-    @GetMapping("libro/{bookId}")
+    @GetMapping("libro/{idLibro}")
     private LibroEntity getLibroById(@PathVariable Long idLibro){
         return libroServiceImple.getByIdLibro(idLibro);
     }
@@ -43,6 +50,17 @@ public class LibroController {
     private List<LibroEntity> getAllLibro(){
         return libroServiceImple.getAllLibro();
     }
+
+    @PostMapping("/libros")
+    public ResponseEntity<String> agregarLibro(@RequestParam String nombreAutor, @RequestParam String correoAutor) {
+        try {
+            libroServiceImple.agregarNombreYApellido(nombreAutor, correoAutor);
+            return ResponseEntity.ok("Libro guardado correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar el libro");
+        }
+    }
+
 
 
 }

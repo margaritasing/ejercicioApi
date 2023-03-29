@@ -55,5 +55,15 @@ public class LibroService implements LibroServiceImple {
         return libroEntity;
     }
 
+    @Override
+    public String agregarNombreYApellido(String nombreAutor, String correoAutor) {
+        LibroEntity libro = new LibroEntity();
+        libro.setNombreAutor(nombreAutor);
+        libro.setCorreoAutor(correoAutor);
+        libroRepository.save(libro);
+        return "Libro guardado correctamente";
+    }
+
+
 
 }
